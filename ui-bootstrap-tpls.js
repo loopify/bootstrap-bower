@@ -1664,6 +1664,12 @@ angular.module('ui.bootstrap.dropdown', [])
     if (!openScope) { return; }
 
     var toggleElement = openScope.getToggleElement();
+    var dropdownElement = openScope.getDropdownElement();
+
+    if ( dropdownElement.hasAttribute('prevent-close-on-click') && dropdownElement.contains(evt.target) ) {
+        return;
+    }
+
     if ( evt && toggleElement && toggleElement[0].contains(evt.target) ) {
         return;
     }
@@ -1713,6 +1719,10 @@ angular.module('ui.bootstrap.dropdown', [])
 
   scope.getToggleElement = function() {
     return self.toggleElement;
+  };
+  
+  scope.getDropdownElement = function() {
+    return self.$element[0].getElementsByClassName('dropdown-menu')[0];
   };
 
   scope.focusToggleElement = function() {
