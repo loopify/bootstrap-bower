@@ -1246,7 +1246,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       customClass: '&',
       shortcutPropagation: '&?'
     },
-    require: ['datepicker', '?^ngModel'],
+    require: ['datepicker', '?^ngModel', '?^ngReadonly'],
     controller: 'DatepickerController',
     link: function(scope, element, attrs, ctrls) {
       var datepickerCtrl = ctrls[0], ngModelCtrl = ctrls[1];
@@ -1551,11 +1551,20 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         throw new Error('HTML5 date input types do not support custom formats.');
       }
 
+      attrs.$observe('readonly', function(value, oldValue) {
+        if (angular.isDefined(value)) {
+          scope.readonly = true;
+        } else {
+          scope.readonly = false;
+        }
+      });
+
       // popup element used to display calendar
       var popupEl = angular.element('<div datepicker-popup-wrap><div datepicker></div></div>');
       popupEl.attr({
         'ng-model': 'date',
-        'ng-change': 'dateSelection()'
+        'ng-change': 'dateSelection()',
+        'ng-readonly': 'readonly'
       });
 
       function cameltoDash( string ){
