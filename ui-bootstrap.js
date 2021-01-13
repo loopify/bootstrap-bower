@@ -1712,12 +1712,27 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
           }
           scope.close();
         } else if (evt.which === 40 && !scope.isOpen) {
-          scope.isOpen = true;
+          if (!attrs.readonly) {
+            scope.$evalAsync(function() {
+              scope.isOpen = true;
+            });
+          }
         }
       };
 
+      attrs.$observe('readonly', function (value) {
+        if (attrs.readonly) {
+          scope.isOpen = false;
+        }
+      });
+
       scope.$watch('isOpen', function(value) {
         if (value) {
+          if (attrs.readonly) {
+            scope.isOpen = false;
+            return;
+          }
+
           scope.$broadcast('datepicker.focus');
           scope.position = appendToBody ? $position.offset(element) : $position.position(element);
           scope.position.top = scope.position.top + element.prop('offsetHeight');
