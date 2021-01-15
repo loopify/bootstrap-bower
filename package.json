@@ -1,0 +1,16 @@
+{
+	"name": "angular-bootstrap",
+	"version": "0.12.8",
+	"repository": {
+		"type": "git",
+		"url": "git@bitbucket.org:isave/loopify-web-app.git"
+	},
+	"author": "https://github.com/angular-ui/bootstrap/graphs/contributors",
+    "license": "MIT",
+    "ignore": [],
+    "description": "Native AngularJS (Angular) directives for Bootstrap.",
+    "main": "./ui-bootstrap-tpls.js",
+    "dependencies": {
+        "angular": "~1.4.1"
+    }
+}
